@@ -18,8 +18,6 @@ sap.ui.define([
             Formatter: Formatter,
 			onInit: function () {
                 this.loadModelProducts();
-                // this.loadProductStock();
-
             },
             
             loadModelProducts: async function() {
@@ -32,20 +30,10 @@ sap.ui.define([
                 oComponent.setModel(oModelProductos, Constants.MODELS.Products);
 
 
-                // let oStock = oModelProductos.getProperty("/value/0/UnitsInStock");
-
                 var oProductsLength = oModelProductos.getProperty("/value/").length;
                 let oModelLength = new JSONModel();
                 oModelLength.setData(oProductsLength);
                 oComponent.setModel(oModelLength, Constants.MODELS.ProductsLength)
-
-                // var parametroStock;
-                // var oStockUnitario;
-                // var oStockTotal;
-                // for (var i = 0; i < oProductsLength; i++) {
-                //     parametroStock = "/value/"+i+"/UnitsInStock";
-                //     oStockUnitario = oModelProductos.getProperty(parametroStock);
-                //     oStockTotal += oStockUnitario;
                 
             },
 
