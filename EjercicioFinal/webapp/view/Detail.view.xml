@@ -1,0 +1,111 @@
+<mvc:View 
+    xmlns:f="sap.ui.layout.form" 
+    controllerName="EjercicioFinal.EjercicioFinal.controller.Detail" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true" 
+    xmlns="sap.m">
+
+    <Page id="page" title="{i18n>titleDetail}">
+        <content>
+            
+
+       <List
+		headerText="Products">
+            <ObjectListItem
+                title="{modelSelectedProduct>/ProductName}"
+                number="{
+                        path: 'modelSelectedProduct>/UnitPrice',
+                        formatter: '.Formatter.formatPrice'
+						}"
+                numberUnit="USD">
+                <firstStatus>
+                    <ObjectStatus
+                        text="{
+						    path: 'modelSelectedProduct>/UnitsInStock',
+							formatter: '.Formatter.formatStock'
+						}"
+                        state="{
+						    path: 'modelSelectedProduct>/UnitsInStock',
+							formatter: '.Formatter.formatColorStock'
+						}"/>
+                        
+                </firstStatus>
+                <ObjectAttribute text="{modelCategory>/CategoryName}" />
+            </ObjectListItem>
+        </List>
+
+            <IconTabBar
+                id="idIconTabBarMulti"
+                class="sapUiResponsiveContentPadding">
+                <items>
+
+                    <IconTabFilter text="{i18n>IconTabInfo}" key="info">
+                        <f:SimpleForm 
+                            id="idFormInfo"
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            title=""
+                            labelSpanXL="3"
+                            labelSpanL="3"
+                            labelSpanM="3"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="4"
+                            emptySpanL="4"
+                            emptySpanM="4"
+                            emptySpanS="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false" >
+                            <f:content>
+                                <Label text="{i18n>labelProductID}"/>
+                                <Text text="{modelSelectedProduct>/ProductID}" />
+                                <Label text="{i18n>labelUnitsInStock}"/>
+                                <Text text="{modelSelectedProduct>/UnitsInStock}" /> 
+                            </f:content>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+
+                    <IconTabFilter text="{i18n>IconTabSupplier}" key="supplier">
+                        <f:SimpleForm 
+                            id="idFormSupplier"
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            title=""
+                            labelSpanXL="3"
+                            labelSpanL="3"
+                            labelSpanM="3"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="4"
+                            emptySpanL="4"
+                            emptySpanM="4"
+                            emptySpanS="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false" >
+                            <f:content>
+                                <Label text="{i18n>labelCompanyName}"/>
+                                <Text text="{modelSupplier>/CompanyName}" />
+                                <Label text="{i18n>labelCompanyAddress}"/>
+                                <Text text="{modelSupplier>/Address}" />
+                                <Label text="{i18n>labelCompanyCity}"/>
+                                <Text text="{modelSupplier>/City}" />
+                                <Label text="{i18n>labelCompanyPhone}"/>
+                                <Text text="{modelSupplier>/Phone}" />                                  
+                            </f:content>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+
+            <HBox >
+                <Button text="{i18n>textButtonEdit}" type="Emphasized" press="onPressEdit" />
+                <Button text="{i18n>textButtonDelete}" press="onPressDelete" />
+                <Button text="{i18n>textButtonCopy}" press="onPressCopy" />
+            </HBox>
+        </content>
+    </Page>
+</mvc:View>

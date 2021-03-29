@@ -1,0 +1,36 @@
+<mvc:View 
+    controllerName="EjercicioFinal.EjercicioFinal.controller.Master" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true" 
+    xmlns="sap.m">
+    
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <List
+                items="{modelProducts>/value}"
+                selectionChange="onItemPress"
+                mode="SingleSelectMaster"
+                id="idProductList">
+                <headerToolbar>
+                    <OverflowToolbar width="100%">
+                        <content>
+                            <SearchField width="90%" placeholder="{i18n>placeholderSearcher}" liveChange="onSearch"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <ObjectListItem
+                    title="{modelProducts>ProductName}"
+                    number="{
+                            path: 'modelProducts>UnitPrice',
+                            formatter: '.Formatter.formatPrice'
+                            }"
+                    numberUnit="USD"
+                    type="Active" 
+                    press="onItemPress">
+                    
+                </ObjectListItem>
+            </List>
+
+        </content>
+    </Page>
+</mvc:View>

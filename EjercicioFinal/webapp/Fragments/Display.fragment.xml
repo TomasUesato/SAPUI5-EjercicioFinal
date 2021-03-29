@@ -1,0 +1,44 @@
+<core:FragmentDefinition 
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form">
+    
+    <Dialog id="idDisplay" >
+        <VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormDisplay354"
+			editable="false"
+			layout="ResponsiveGridLayout"
+			title="{i18n>tituloDisplay}"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>displayFecha}" />
+				<Text id="idFechaIngresada" text="{modelTokens}" />
+				<Label text="{i18n>tituloColumna2}" />
+				<Text text="{modelTokens>/proveedor}" />
+				<Label text="{i18n>displayPais}"/>
+				<Text text="{modelTokens>/pais}"/>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+
+    <Bar>
+            <contentRight>
+        <Button text="{i18n>backButton}" type="Back" press="onCloseDialog" />
+            </contentRight>
+        </Bar>
+        
+    </Dialog>
+</core:FragmentDefinition>

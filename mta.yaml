@@ -1,0 +1,56 @@
+_schema-version: "3.2"
+ID: EjercicioFinal
+version: 0.0.1
+modules:
+- name: ejerciciofinal-approuter
+  type: approuter.nodejs
+  path: ejerciciofinal-approuter
+  requires:
+  - name: EjercicioFinal_html_repo_runtime
+  - name: dest_EjercicioFinal
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: EjercicioFinal_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: EjercicioFinal_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - EjercicioFinal-content.zip
+      name: EjercicioFinal
+      target-path: resources/
+- name: EjercicioFinal
+  type: html5
+  path: EjercicioFinal
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: EjercicioFinal_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: EjercicioFinal_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: dest_EjercicioFinal
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run EjercicioFinal-EjercicioFinal",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/ejerciciofinal-approuter/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/EjercicioFinalEjercicioFinal/index.html",
+        "--ui5",
+        "{\"version\":\"1.87.1\"}"
+      ],
+      "cwd": "${workspaceFolder}/EjercicioFinal",
+      "env": {
+        "PORT": "6004",
+        "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/EjercicioFinal/EjercicioFinal\"}"
+      },
+      "envFile": "${workspaceFolder}/EjercicioFinal/.env1",
+      "preLaunchTask": "Build EjercicioFinal"
+    }
+  ]
+}

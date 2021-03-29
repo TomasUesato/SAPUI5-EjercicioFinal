@@ -1,0 +1,4 @@
+<mvc:View controllerName="EjercicioFinal.EjercicioFinal.controller.App" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<SplitApp id="idSplitApp">
+	</SplitApp>
+</mvc:View>
