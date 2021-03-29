@@ -29,16 +29,16 @@ sap.ui.define([
 
                 let oModelProductos = new JSONModel();
                 oModelProductos.setData(oData);
-                oComponent.setModel(oModelProductos, Constants.routes.MODELS.Products);
+                oComponent.setModel(oModelProductos, Constants.MODELS.Products);
 
 
                 // let oStock = oModelProductos.getProperty("/value/0/UnitsInStock");
 
-                // var oProductsLength = oModelProductos.getProperty("/value/").length;
-                // let oModelLength = new JSONModel();
-                // oModelLength.setData(oProductsLength);
-                // oComponent.setModel(oModelLength, Constants.routes.MODELS.ProductsLength)
-                
+                var oProductsLength = oModelProductos.getProperty("/value/").length;
+                let oModelLength = new JSONModel();
+                oModelLength.setData(oProductsLength);
+                oComponent.setModel(oModelLength, Constants.MODELS.ProductsLength)
+
                 // var parametroStock;
                 // var oStockUnitario;
                 // var oStockTotal;
@@ -63,12 +63,17 @@ sap.ui.define([
                 
                 oBinding.filter(aFilters, "Application");
 
+                let oProductsLength = oBinding.getLength();
+                let oModelLength = new JSONModel();
+                oModelLength.setData(oProductsLength);
+                this.getOwnerComponent().setModel(oModelLength, Constants.MODELS.ProductsLength);
+
             },
 
             onItemPress: async function(oEvent) {
 
-                let oItem = oEvent.getSource().getSelectedItem().getBindingContext(Constants.routes.MODELS.Products);
-                let oModel = this.getOwnerComponent().getModel(Constants.routes.MODELS.Products);
+                let oItem = oEvent.getSource().getSelectedItem().getBindingContext(Constants.MODELS.Products);
+                let oModel = this.getOwnerComponent().getModel(Constants.MODELS.Products);
                 let oItemSeleccionado = oModel.getProperty(oItem.getPath());
                 let oIdSeleccionado = oItemSeleccionado.ProductID;
 
@@ -90,15 +95,15 @@ sap.ui.define([
                 oModelItemSelectedSupplier.setData(oSupplierItemSelected);
                
 
-                oComponent.setModel(oModelItemSelectedCategory, Constants.routes.MODELS.ItemCategory);
-                oComponent.setModel(oModelItemSelectedSupplier, Constants.routes.MODELS.ItemSupplier);
-                oComponent.setModel(oModelSelectedProduct, Constants.routes.MODELS.SelectedProduct);
+                oComponent.setModel(oModelItemSelectedCategory, Constants.MODELS.ItemCategory);
+                oComponent.setModel(oModelItemSelectedSupplier, Constants.MODELS.ItemSupplier);
+                oComponent.setModel(oModelSelectedProduct, Constants.MODELS.SelectedProduct);
 
                 this.getOwnerComponent().getRouter().navTo(Constants.routes.Detail);
             },
 
             loadProductStock: function() {
-                let oModel = this.getOwnerComponent().getModel(Constants.routes.MODELS.Products);
+                let oModel = this.getOwnerComponent().getModel(Constants.MODELS.Products);
             }
 
 		});

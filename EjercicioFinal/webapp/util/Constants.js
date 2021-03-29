@@ -12,19 +12,19 @@ sap.ui.define([], function() {
             },
             ProductList: "idProductList",
         },
-
-        routes: {
-            Detail: "RouteDetail",
-            FRAGMENTS: {
-                Display: "EjercicioFinal.EjercicioFinal.Fragments.Display"
-            },
-            MODELS: {
+        MODELS: {
                 Products: "modelProducts",
                 SelectedProduct: "modelSelectedProduct",
                 ItemCategory: "modelCategory",
                 ItemSupplier: "modelSupplier",
                 ProductsLength: "modelProductsLength"
-            }
+        },
+
+        routes: {
+            Detail: "RouteDetail",
+            FRAGMENTS: {
+                Display: "EjercicioFinal.EjercicioFinal.Fragments.Display"
+            },          
         }
     };
 }, true);

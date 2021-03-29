@@ -6,7 +6,7 @@
     
     <Dialog id="idDisplay" >
         <VBox class="sapUiSmallMargin">
-		<f:SimpleForm id="SimpleFormDisplay354"
+		<f:SimpleForm id="idFormDisplay"
 			editable="false"
 			layout="ResponsiveGridLayout"
 			title="{i18n>tituloDisplay}"
@@ -24,19 +24,21 @@
 			columnsM="1"
 			singleContainerFullSize="false" >
 			<f:content>
-				<Label text="{i18n>displayFecha}" />
-				<Text id="idFechaIngresada" text="{modelTokens}" />
-				<Label text="{i18n>tituloColumna2}" />
-				<Text text="{modelTokens>/proveedor}" />
-				<Label text="{i18n>displayPais}"/>
-				<Text text="{modelTokens>/pais}"/>
+				<Label text="{i18n>displayFormProductName}" />
+				<Text text="{modelSelectedProduct>/ProductName}" />
+				<Label text="{i18n>displayFormProductId}" />
+				<Text text="{modelSelectedProduct>/ProductID}" />
+				<Label text="{i18n>displayFormSupplierId}"/>
+				<Text text="{modelSelectedProduct>/SupplierID}"/>
+                <Label text="{i18n>displayFormUnitsInStock}"/>
+				<Text text="{modelSelectedProduct>/UnitsInStock}"/>
 			</f:content>
 		</f:SimpleForm>
 	</VBox>
 
     <Bar>
             <contentRight>
-        <Button text="{i18n>backButton}" type="Back" press="onCloseDialog" />
+        <Button text="{i18n>okButton}" type="Emphasized" press="onCloseDialog" />
             </contentRight>
         </Bar>
         

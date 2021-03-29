@@ -25,7 +25,7 @@ sap.ui.define([
 		    },
             
             onPressCopy: function() {
-                MessageToast.show("Copiado en el portapapeles");
+                MessageToast.show("Copied to Clipboard");
             },
 
             onPressEdit: function() {

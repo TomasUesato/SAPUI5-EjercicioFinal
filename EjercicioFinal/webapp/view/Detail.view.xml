@@ -9,15 +9,14 @@
         <content>
             
 
-       <List
-		headerText="Products">
+       <List>
             <ObjectListItem
                 title="{modelSelectedProduct>/ProductName}"
                 number="{
                         path: 'modelSelectedProduct>/UnitPrice',
                         formatter: '.Formatter.formatPrice'
 						}"
-                numberUnit="USD">
+                numberUnit="{i18n>currency}">
                 <firstStatus>
                     <ObjectStatus
                         text="{
@@ -63,6 +62,10 @@
                                 <Text text="{modelSelectedProduct>/ProductID}" />
                                 <Label text="{i18n>labelUnitsInStock}"/>
                                 <Text text="{modelSelectedProduct>/UnitsInStock}" /> 
+                                <Label text="{i18n>labelQuantityPerUnit}"/>
+                                <Text text="{modelSelectedProduct>/QuantityPerUnit}" /> 
+                                <Label text="{i18n>labelDiscontinued}"/>
+                                <Text text="{modelSelectedProduct>/Discontinued}" /> 
                             </f:content>
                         </f:SimpleForm>
                     </IconTabFilter>
