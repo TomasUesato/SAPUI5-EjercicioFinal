@@ -7,7 +7,7 @@
     <Dialog id="idDisplay" >
         <VBox class="sapUiSmallMargin">
 		<f:SimpleForm id="idFormDisplay"
-			editable="false"
+			editable="true"
 			layout="ResponsiveGridLayout"
 			title="{i18n>tituloDisplay}"
 			labelSpanXL="3"
@@ -36,9 +36,9 @@
 		</f:SimpleForm>
 	</VBox>
 
-    <Bar>
+        <Bar>
             <contentRight>
-        <Button text="{i18n>okButton}" type="Emphasized" press="onCloseDialog" />
+                <Button text="{i18n>okButton}" type="Emphasized" press="onCloseDialog" />
             </contentRight>
         </Bar>
         

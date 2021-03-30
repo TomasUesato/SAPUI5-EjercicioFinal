@@ -34,7 +34,7 @@ sap.ui.define([
                 if (!this._oFragment) {
                     Fragment.load({
                         id: oView.getId(),
-                        name: Constants.routes.FRAGMENTS.Display,
+                        name: Constants.FRAGMENTS.Display,
                         controller: this
                     }).then(function (oDialog) {
                         this._oFragment = oDialog;

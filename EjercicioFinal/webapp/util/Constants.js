@@ -19,12 +19,14 @@ sap.ui.define([], function() {
                 ItemSupplier: "modelSupplier",
                 ProductsLength: "modelProductsLength"
         },
+        FRAGMENTS: {
+                Display: "EjercicioFinal.EjercicioFinal.Fragments.Display",
+                SortDialog: "EjercicioFinal.EjercicioFinal.Fragments.SortDialog",
+                FilterDialog: "EjercicioFinal.EjercicioFinal.Fragments.FilterDialog"
+            },          
 
         routes: {
             Detail: "RouteDetail",
-            FRAGMENTS: {
-                Display: "EjercicioFinal.EjercicioFinal.Fragments.Display"
-            },          
         }
     };
 }, true);

@@ -8,16 +8,14 @@
     <Page id="page" title="{i18n>titleDetail}">
         <content>
             
-
-       <List>
-            <ObjectListItem
+            <ObjectHeader
                 title="{modelSelectedProduct>/ProductName}"
                 number="{
                         path: 'modelSelectedProduct>/UnitPrice',
                         formatter: '.Formatter.formatPrice'
 						}"
                 numberUnit="{i18n>currency}">
-                <firstStatus>
+                <statuses>
                     <ObjectStatus
                         text="{
 						    path: 'modelSelectedProduct>/UnitsInStock',
@@ -28,10 +26,10 @@
 							formatter: '.Formatter.formatColorStock'
 						}"/>
                         
-                </firstStatus>
+                </statuses>
                 <ObjectAttribute text="{modelCategory>/CategoryName}" />
-            </ObjectListItem>
-        </List>
+            </ObjectHeader>
+        
 
             <IconTabBar
                 id="idIconTabBarMulti"

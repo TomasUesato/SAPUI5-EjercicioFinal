@@ -4,7 +4,7 @@
     displayBlock="true" 
     xmlns="sap.m">
     
-    <Page id="page" title="{i18n>title} ({modelProductsLength>/})">
+    <Page id="page" backgroundDesign="Solid" title="{i18n>title} ({modelProductsLength>/})">
         <content>
             <List
                 items="{modelProducts>/value}"
@@ -14,7 +14,9 @@
                 <headerToolbar>
                     <OverflowToolbar width="100%">
                         <content>
-                            <SearchField width="90%" placeholder="{i18n>placeholderSearcher}" liveChange="onSearch"/>
+                            <SearchField width="60%" placeholder="{i18n>placeholderSearcher}" liveChange="onSearch"/>
+                            <Button tooltip="Ordenar" icon="sap-icon://sort" press="onSort"/>
+                            <Button tooltip="Filtrar" icon="sap-icon://filter" press="onFilter"/>
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>

@@ -6,18 +6,24 @@ sap.ui.define([
         "sap/ui/core/Fragment",
         "EjercicioFinal/EjercicioFinal/util/Formatter",
         "sap/ui/model/Filter",
-        "sap/ui/model/FilterOperator"
+        "sap/ui/model/FilterOperator",
+        "sap/ui/Device",
+        "sap/ui/model/Sorter",
+        "sap/m/library"
 	],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-	function (Controller, JSONModel, Constants, Services, Fragment, Formatter, Filter, FilterOperator) {
+	function (Controller, JSONModel, Constants, Services, Fragment, Formatter, Filter, FilterOperator, Device, Sorter, mLibrary) {
 		"use strict";
 
 		return Controller.extend("EjercicioFinal.EjercicioFinal.controller.Master", {
             Formatter: Formatter,
 			onInit: function () {
                 this.loadModelProducts();
+
+                this._mViewSettingsDialogs = {};
+
             },
             
             loadModelProducts: async function() {
@@ -90,8 +96,171 @@ sap.ui.define([
                 this.getOwnerComponent().getRouter().navTo(Constants.routes.Detail);
             },
 
-            loadProductStock: function() {
-                let oModel = this.getOwnerComponent().getModel(Constants.MODELS.Products);
+            onSort: function () {      
+                this.createViewSettingsDialog(Constants.FRAGMENTS.SortDialog).open();                   
+            },
+
+            createViewSettingsDialog: function (sDialogFragmentName) {
+                var oDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+                if (!oDialog) {
+                    oDialog = sap.ui.xmlfragment(sDialogFragmentName, this);
+                    this.getView().addDependent(oDialog);
+                    this._mViewSettingsDialogs[sDialogFragmentName] = oDialog;
+
+                    oDialog.setFilterSearchOperator(mLibrary.StringFilterOperator.Contains);
+
+                if (sDialogFragmentName === "EjercicioFinal.EjercicioFinal.Fragments.FilterDialog") {
+                    var oModelJSON = this.getOwnerComponent().getModel(Constants.MODELS.Products);
+                    var modelOriginal = oModelJSON.getProperty("/value");
+
+                    var jsonProductID = JSON.parse(JSON.stringify(modelOriginal, ["ProductID"]));
+                    var jsonProductName = JSON.parse(JSON.stringify(modelOriginal, ["ProductName"]));
+                    var jsonUnitsOnOrder = JSON.parse(JSON.stringify(modelOriginal, ["UnitsOnOrder"]));
+                    var jsonUnitPrice = JSON.parse(JSON.stringify(modelOriginal, ["UnitPrice"]));
+
+                    oDialog.setModel(oModelJSON);
+
+                    //check for duplicates in filter items
+                    jsonProductID = jsonProductID.filter(function(currentObject) {
+                        if(currentObject.ProductID in jsonProductID) {
+                            return false;
+                        } else {
+                            jsonProductID[currentObject.ProductID] = true;
+                            return true;
+                        }
+                    });
+                    jsonProductName = jsonProductName.filter(function(currentObject) {
+                        if(currentObject.ProductName in jsonProductName) {
+                            return false;
+                        } else {
+                            jsonProductName[currentObject.ProductName] = true;
+                            return true;
+                        }
+                    });
+                    jsonUnitsOnOrder = jsonUnitsOnOrder.filter(function(currentObject) {
+                        if(currentObject.UnitsOnOrder in jsonUnitsOnOrder) {
+                            return false;
+                        } else {
+                            jsonUnitsOnOrder[currentObject.UnitsOnOrder] = true;
+                            return true;
+                        }
+                    });
+                    jsonUnitPrice = jsonUnitPrice.filter(function(currentObject) {
+                        if(currentObject.UnitPrice in jsonUnitPrice) {
+                            return false;
+                        } else {
+                            jsonUnitPrice[currentObject.UnitPrice] = true;
+                            return true;
+                        }
+                    });
+
+                    //create items arrays and iterate
+                    var ProductIDFilter = [];
+                    for (var i = 0; i < jsonProductID.length; i++) {
+                        ProductIDFilter.push(
+                            new sap.m.ViewSettingsItem({
+                                text: jsonProductID[i].ProductID,
+                                key: "ProductID"
+                            })
+                        );
+                    }
+                    var ProductNameFilter = [];
+                    for (var i = 0; i < jsonProductName.length; i++) {
+                        ProductNameFilter.push(
+                            new sap.m.ViewSettingsItem({
+                                text: jsonProductName[i].ProductName,
+                                key: "ProductName"
+                            })
+                        );
+                    }
+                    var UnitsOnOrderFilter = [];
+                    for (var i = 0; i < jsonUnitsOnOrder.length; i++) {
+                        UnitsOnOrderFilter.push(
+                            new sap.m.ViewSettingsItem({
+                                text: jsonUnitsOnOrder[i].UnitsOnOrder,
+                                key: "UnitsOnOrder"
+                            })
+                        );
+                    }
+                    var UnitPriceFilter = [];
+                    for (var i = 0; i < jsonUnitPrice.length; i++) {
+                        UnitPriceFilter.push(
+                            new sap.m.ViewSettingsItem({
+                                text: jsonUnitPrice[i].UnitPrice,
+                                key: "UnitPrice"
+                            })
+                        );
+                    }
+    
+                oDialog.destroyFilterItems();
+                oDialog.addFilterItem(new sap.m.ViewSettingsFilterItem({
+                    key: "ProductID",
+                    text: "Product ID",
+                    items: ProductIDFilter
+                }));
+                oDialog.addFilterItem(new sap.m.ViewSettingsFilterItem({
+                    key: "ProductName",
+                    text: "Product Name",
+                    items: ProductNameFilter
+                }));
+                oDialog.addFilterItem(new sap.m.ViewSettingsFilterItem({
+                    key: "UnitsOnOrder",
+                    text: "Units On Order",
+                    items: UnitsOnOrderFilter
+                }));
+                oDialog.addFilterItem(new sap.m.ViewSettingsFilterItem({
+                    key: "UnitPrice",
+                    text: "Unit Price",
+                    items: UnitPriceFilter
+                }));
+
+                }
+                }        
+                
+                if (Device.system.desktop) {
+                    oDialog.addStyleClass("sapUiSizeCompact");
+                }
+
+                
+                return oDialog;
+            },
+
+            onSortDialogConfirm: function (oEvent) {
+                var oList = this.byId(Constants.ids.ProductList),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oList.getBinding("items"),
+                    sPath,
+                    bDescending,
+                    aSorters = [];
+                sPath = mParams.sortItem.getKey();
+                bDescending = mParams.sortDescending;
+                aSorters.push(new Sorter(sPath, bDescending));
+                oBinding.sort(aSorters);
+            },
+
+            onFilter: function() {
+                this.createViewSettingsDialog(Constants.FRAGMENTS.FilterDialog).open();
+            },
+
+            onFilterDialogConfirm: function(oEvent) {
+                var oList = this.byId(Constants.ids.ProductList),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oList.getBinding("items"),
+                    aFilters = [];
+                mParams.filterItems.forEach(function(oItem) {
+                    var sPath = oItem.getKey(),
+                        sOperator = FilterOperator.EQ,
+                        sValue1 = oItem.getText();
+                    var oFilter = new Filter(sPath, sOperator, sValue1);
+                    aFilters.push(oFilter);
+                    
+                });
+                oBinding.filter(aFilters);
+
+                let oProductsLength = oBinding.getLength();
+                let oModelLength = new JSONModel();
+                oModelLength.setData(oProductsLength);
+                this.getOwnerComponent().setModel(oModelLength, Constants.MODELS.ProductsLength);
             }
 
 		});
