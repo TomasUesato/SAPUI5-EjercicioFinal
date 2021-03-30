@@ -10,7 +10,8 @@
                 items="{modelProducts>/value}"
                 selectionChange="onItemPress"
                 mode="SingleSelectMaster"
-                id="idProductList">
+                id="idProductList"
+                backgroundDesign="Solid">
                 <headerToolbar>
                     <OverflowToolbar width="100%">
                         <content>
